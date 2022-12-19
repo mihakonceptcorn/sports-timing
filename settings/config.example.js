@@ -4,4 +4,5 @@ module.exports = {
   DBUSER: 'user',
   DBPASSWORD: 'password',
   DBNAME: 'dbname',
+  jwt: 'jwt-key',
 }

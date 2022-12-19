@@ -1,6 +1,8 @@
 'use strict'
 
 const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
+const config = require('./../settings/config')
 
 const response = require('./../response')
 const db = require('./../settings/db')
@@ -41,6 +43,36 @@ exports.signup = (req, res) => {
         } else {
           response.status(200, {message: `Registration success.`, results}, res)
         }
+      })
+    }
+  })
+}
+
+exports.signin = (req, res) => {
+  db.query("SELECT `id`, `email`, `password` FROM `users` WHERE `email` = '" + req.body.email + "'", (error, rows, fields) => {
+    if (error) {
+      response.status(400, error, res)
+    } else if (!rows.length) {
+      response.status(401, {message: `User ${req.body.email} not found.`}, res)
+    } else {
+      const row = JSON.parse(JSON.stringify(rows))
+      row.map(rw => {
+        const password = bcrypt.compareSync(req.body.password, rw.password)
+        if (password) {
+          const token = jwt.sign(
+            {
+              userId: rw.id,
+              email: rw.email
+            },
+            config.jwt,
+            { expiresIn: 120 * 120 }
+          )
+          response.status(200, {token: `Bearer ${token}`}, res)
+        } else {
+          response.status(401, {message: `Wrong password.`}, res)
+        }
+
+        return true
       })
     }
   })
