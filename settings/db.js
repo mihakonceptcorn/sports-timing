@@ -1,11 +1,12 @@
 const mysql = require('mysql')
+const env = require('./dbenv')
 
 const connection = mysql.createConnection({
-  host: 'localhost',
-  port: '3306',
-  user: 'root',
-  password: 'root',
-  database: 'sports_timing'
+  host: env.HOST,
+  port: env.PORT,
+  user: env.DBUSER,
+  password: env.DBPASSWORD,
+  database: env.DBNAME
 })
 
 connection.connect((error) => {
