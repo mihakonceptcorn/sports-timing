@@ -1,5 +1,3 @@
-'use strict'
-
 const passport = require("passport");
 const usersController = require("../controllers/UserController");
 module.exports = (app) => {
