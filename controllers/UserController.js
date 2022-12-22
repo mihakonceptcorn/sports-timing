@@ -18,6 +18,17 @@ exports.getAllUsers = (req, res) => {
   })
 }
 
+exports.getUserById = (req, res) => {
+  const sql = "SELECT `id`, `name`, `second_name`, `email` FROM `users` WHERE `id` = '" + req.params.id + "'"
+  db.query(sql, (error, rows, fields) => {
+    if (error) {
+      response.status(400, error, res)
+    } else {
+      response.status(200, rows, res)
+    }
+  })
+}
+
 exports.signup = (req, res) => {
   db.query("SELECT `id`, `email`, `name` FROM `users` WHERE `email` = '" + req.body.email + "'", (error, rows, fields) => {
     if (error) {

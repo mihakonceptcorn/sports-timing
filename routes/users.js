@@ -15,4 +15,8 @@ module.exports = (app) => {
   app
     .route('/api/users')
     .get(passport.authenticate('jwt', { session: false }), usersController.getAllUsers)
+
+  app
+    .route('/api/user/:id')
+    .get(passport.authenticate('jwt', { session: false }), usersController.getUserById)
 }
