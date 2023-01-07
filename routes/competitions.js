@@ -6,6 +6,10 @@ module.exports = (app) => {
     .get(passport.authenticate('jwt', { session: false }), competitionController.getCompetitions)
 
   app
+    .route('/api/competitions/:userId')
+    .get(passport.authenticate('jwt', { session: false }), competitionController.getUserCompetitions)
+
+  app
     .route('/api/competition/:id')
     .get(passport.authenticate('jwt', { session: false }), competitionController.getCompetitionById)
 

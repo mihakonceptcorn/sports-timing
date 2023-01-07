@@ -5,7 +5,22 @@ const bcrypt = require("bcryptjs")
 exports.getCompetitions = (req, res) => {
   const limit = req.params.limit || 20
   const skip = req.params.skip || 0
-  const sql = 'SELECT `id`, `name`, `date`, `stages`, `rounds`, `finished`, `country`, `city`, `location`, `description` FROM `competitions` LIMIT ' + limit + ' OFFSET ' + skip + ''
+  const sql = 'SELECT `id`, `user_id`, `name`, `date`, `stages`, `rounds`, `finished`, `country`, `city`, `location`, `description` FROM `competitions` LIMIT ' + limit + ' OFFSET ' + skip + ''
+  db.query(sql, (error, rows, fields) => {
+    if (error) {
+      response.status(400, error, res)
+    } else {
+      response.status(200, rows, res)
+    }
+  })
+}
+
+exports.getUserCompetitions = (req, res) => {
+  const limit = req.params.limit || 20
+  const skip = req.params.skip || 0
+  const userId = req.params.userId
+  const sql = 'SELECT `id`, `name`, `date`, `stages`, `rounds`, `finished`, `country`, `city`, `location`, `description` ' +
+    'FROM `competitions`  WHERE `user_id` = ' + userId + ' LIMIT ' + limit + ' OFFSET ' + skip + ''
   db.query(sql, (error, rows, fields) => {
     if (error) {
       response.status(400, error, res)
@@ -16,7 +31,7 @@ exports.getCompetitions = (req, res) => {
 }
 
 exports.getCompetitionById = (req, res) => {
-  const sql = "SELECT `id`, `name`, `date`, `stages`, `rounds`, `finished`, `country`, `city`, `location`, `description` FROM `competitions` WHERE `id` = '" + req.params.id + "'"
+  const sql = "SELECT `id`, `user_id`, `name`, `date`, `stages`, `rounds`, `finished`, `country`, `city`, `location`, `description` FROM `competitions` WHERE `id` = '" + req.params.id + "'"
   db.query(sql, (error, rows, fields) => {
     if (error) {
       response.status(400, error, res)
@@ -35,9 +50,10 @@ exports.createCompetition = (req, res) => {
   const city = req.body.city
   const location = req.body.location
   const description = req.body.description
+  const userId = req.body.userId
 
-  const sql = "INSERT INTO `competitions` (`name`, `date`, `stages`, `rounds`, `country`, `city`, `location`, `description`)" +
-    "VALUES('" + name + "', '" + date + "', '" + stages + "', '" + rounds + "', '" + country + "', '" + city + "', '" + location + "', '" + description + "')"
+  const sql = "INSERT INTO `competitions` (`name`, `date`, `stages`, `rounds`, `country`, `city`, `location`, `description`, `user_id`)" +
+    "VALUES('" + name + "', '" + date + "', '" + stages + "', '" + rounds + "', '" + country + "', '" + city + "', '" + location + "', '" + description + "', '" + userId + "')"
 
   db.query(sql, (error, results) => {
     if (error) {
