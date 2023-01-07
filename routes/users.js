@@ -1,9 +1,6 @@
 const passport = require("passport");
 const usersController = require("../controllers/UserController");
 module.exports = (app) => {
-  const passport = require('passport')
-  const usersController = require('./../controllers/UserController')
-
   app
     .route('/api/auth/signup')
     .post(usersController.signup)

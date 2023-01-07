@@ -22,12 +22,4 @@ connection.on('close', function (err) {
   return console.error(new Date(), 'MySQL close', err)
 })
 
-// connection.connect((error) => {
-//   if (error) {
-//     return console.log('DataBase connection error:', error)
-//   } else {
-//     return console.log('DataBase connection success!')
-//   }
-// })
-
 module.exports = connection
