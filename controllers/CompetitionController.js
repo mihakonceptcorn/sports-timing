@@ -55,11 +55,11 @@ exports.createCompetition = (req, res) => {
   const sql = "INSERT INTO `competitions` (`name`, `date`, `stages`, `rounds`, `country`, `city`, `location`, `description`, `user_id`)" +
     "VALUES('" + name + "', '" + date + "', '" + stages + "', '" + rounds + "', '" + country + "', '" + city + "', '" + location + "', '" + description + "', '" + userId + "')"
 
-  db.query(sql, (error, results) => {
+  db.query(sql, (error, result) => {
     if (error) {
       response.status(400, error, res)
     } else {
-      response.status(200, {message: `Competition created successfully.`, results}, res)
+      response.status(200, {message: `Competition created successfully.`, result}, res)
     }
   })
 }
