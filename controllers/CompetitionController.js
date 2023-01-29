@@ -1,6 +1,5 @@
 const db = require("../settings/db")
 const response = require("../response")
-const bcrypt = require("bcryptjs")
 
 exports.getCompetitions = (req, res) => {
   const limit = req.params.limit || 20
