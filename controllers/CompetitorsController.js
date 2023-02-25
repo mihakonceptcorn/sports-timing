@@ -13,7 +13,6 @@ exports.getCompetitorsByCompetitionId = (req, res) => {
 }
 
 exports.addCompetitor = (req, res) => {
-  console.log(req.body)
   const competitionId = req.body.competitionId
   const name = req.body.name
   const secondName = req.body.secondName
